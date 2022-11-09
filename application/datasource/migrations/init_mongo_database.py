@@ -1,7 +1,7 @@
-import pymongo
-from pymongo.database import Database
+import os
 
-from application.datasource.connections.mongo_connector import *
+from pymongo import MongoClient
+from pymongo.database import Database
 
 __database_name = os.environ.get('MONGO_DATABASE_NAME')
 __connection_string = os.environ.get('MONGO_CONNECTION_STRING')
@@ -10,11 +10,12 @@ __users_collection_name = os.environ.get('MONGO_USERS_COLLECTION_NAME')
 __jokes_collection_name = os.environ.get('MONGO_JOKES_COLLECTION_NAME')
 __words_collection_name = os.environ.get('MONGO_JOKE_TRIGGERS_COLLECTION_NAME')
 __foul_lang_collection_name = os.environ.get('MONGO_FOUL_LANGUAGE_COLLECTION_NAME')
+__answer_collection_name = os.environ.get('MONGO_ANSWERS_COLLECTION_NAME')
 
 # jokes collection fields names
-__hash_field = os.environ.get('JOKES_HASH_FIELD_NAME')
-__text_field = os.environ.get('JOKES_TEXT_FIELD_NAME')
-__hash_index = os.environ.get('JOKES_HASH_INDEX_NAME')
+__jokes_hash_field = os.environ.get('JOKES_HASH_FIELD_NAME')
+__jokes_text_field = os.environ.get('JOKES_TEXT_FIELD_NAME')
+__jokes_hash_index = os.environ.get('JOKES_HASH_INDEX_NAME')
 
 # users stats collection fields names
 __user_id_field = os.environ.get('USER_ID_FIELD_NAME')
@@ -26,6 +27,11 @@ __grop_field = os.environ.get('GROUP_FIELD_NAME')
 __triggers_field = os.environ.get('TRIGGERS_FIELD_NAME')
 __jokes_grope = os.environ.get('JOKE_TRIGGER_GROPE')
 __greetings_grope = os.environ.get('GREETINGS_TRIGGER_GROPE')
+
+# answers collection fields names
+__answer_hash_field = os.environ.get('ANSWER_HASH_FIELD_NAME')
+__answer_text_field = os.environ.get('ANSWER_TEXT_FIELD_NAME')
+__answer_hash_index = os.environ.get('ANSWER_INDEX_NAME')
 
 __data_base_connection: Database
 __mongo_client: MongoClient
@@ -42,11 +48,12 @@ def init_db():
 
     users_collection = bot_serega_db_connection[__users_collection_name]
     jokes_collection = bot_serega_db_connection[__jokes_collection_name]
+    answers_collection = bot_serega_db_connection[__answer_collection_name]
     words_collection = bot_serega_db_connection[__words_collection_name]
-    foul_lang_collection = bot_serega_db_connection[__foul_lang_collection_name]
 
     users_collection.create_index([(__user_id_field, 1)], name=__user_index, unique=True)
-    jokes_collection.create_index([(__hash_field, 1)], name=__hash_index, unique=True)
+    jokes_collection.create_index([(__jokes_hash_field, 1)], name=__jokes_hash_index, unique=True)
+    # answers_collection.create_index([(__answer_hash_field, 1)], name=__answer_hash_index, unique=True)
 
     global __data_base_connection, __mongo_client
     __mongo_client = mongo_client

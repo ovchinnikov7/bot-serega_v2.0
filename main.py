@@ -1,4 +1,4 @@
-import configuration
+from application.dataset_api.data_handler import init_data_handler
 from application.dataset_api.parse_utils import ParseUtils
 from application.datasource.repositories.repositories import MongoRepositories
 from application.telegram_bot.bot_controller import init_bot_handlers, run_bot
@@ -12,6 +12,7 @@ def main():
         repositories.get_jokes_repository(),
         repositories.get_words_repository()
     )
+    init_data_handler(pars_utils)
     # await pars_utils.parse_html_jokes('messages.html')
     # pars_utils.add_triggers()
 
@@ -21,7 +22,7 @@ def main():
     init_bot_handlers(
         repositories.get_jokes_repository(),
         repositories.get_users_repository(),
-        pars_utils
+        repositories.get_words_repository()
     )
 
     # Start bot
