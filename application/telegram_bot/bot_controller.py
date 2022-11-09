@@ -4,12 +4,16 @@ import logging
 
 import asyncio
 import random
+from os.path import join, dirname
 
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher, filters
 from aiogram.dispatcher.filters import CommandStart
 from aiogram.types import ContentType
 from aiogram.utils import executor
+from dotenv import load_dotenv
+
+from application.configuration import *
 
 from application.dataset_api.data_handler import handle_jokes_registry, handle_words, handle_answer_registry
 from application.datasource.repositories.repo_utils import DictionaryGrope
@@ -21,7 +25,6 @@ from application.telegram_bot.bot_utils import get_user_first_name, get_user_id,
 
 __bot_token = users = os.environ.get('API_TOKEN')
 __update_jokes_token = os.environ.get('UPDATE_JOKES_TOKEN')
-
 
 __bot = Bot(token=__bot_token)
 __my_names: ()

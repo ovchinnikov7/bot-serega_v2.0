@@ -1,7 +1,8 @@
+from application.telegram_bot.bot_controller import init_bot_handlers, run_bot
+
 from application.dataset_api.data_handler import init_data_handler
 from application.dataset_api.parse_utils import ParseUtils
 from application.datasource.repositories.repositories import MongoRepositories
-from application.telegram_bot.bot_controller import init_bot_handlers, run_bot
 
 
 def main():

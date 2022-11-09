@@ -2,6 +2,7 @@ import os
 
 from application.dataset_api.parse_utils import ParseUtils
 from application.datasource.repositories.repo_utils import DictionaryGrope
+from application.configuration import *
 
 __tmp_storage_path: str
 __parse_utils: ParseUtils
